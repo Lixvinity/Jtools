@@ -86,3 +86,4 @@ else:
 install_optional_pack("DiscordWebhook", r"https://github.com/Lixvinity/Jtools/raw/main/WebhookMain.py", Apps, "Discord_Webhook_Sender")
 install_optional_pack("TwitchDropSniper", r"https://github.com/Lixvinity/Jtools/raw/main/TwitchDropSniper.py", Apps, "Twitch_idler")
 install_optional_pack("robloxfix", r"https://raw.githubusercontent.com/Lixvinity/Jtools/main/robloxfix.py", Apps, "Rofixer")
+install_optional_pack("PasswordGenerator", r"https://github.com/Lixvinity/Jtools/raw/main/PasswordGenerator.py", Apps, "PasswordGen")
