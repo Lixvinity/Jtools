@@ -1,15 +1,8 @@
-#       _            _                     _                 _____    _____   ___    _  _   
-#      | |          | |                   | |               |_   _|  / ____| |__ \  | || |  
-#      | |  ______  | |_    ___     ___   | |    ___          | |   | |         ) | | || |_ 
-#  _   | | |______| | __|  / _ \   / _ \  | |   / __|         | |   | |        / /  |__   _|
-# | |__| |          | |_  | (_) | | (_) | | |   \__ \  _     _| |_  | |____   / /_     | |  
-#  \____/            \__|  \___/   \___/  |_|   |___/ ( )   |_____|  \_____| |____|    |_|  
-#                                                     |/                                                                                                                             
 from PIL import Image
 import os
 import time
 
-print(r"""\ 
+print(r"""
        _            _                     _                 _____    _____   ___    _  _   
       | |          | |                   | |               |_   _|  / ____| |__ \  | || |  
       | |  ______  | |_    ___     ___   | |    ___          | |   | |         ) | | || |_ 
@@ -21,37 +14,55 @@ print(r"""\
 time.sleep(1)
 
 
-def Scale_Image(image, scale_percentage, imagequality, filetype):
+# ...
+
+def scale_image(image, scale_percentage, image_quality, file_type):
     original_size = image.size
     original_name, _ = os.path.splitext(os.path.basename(image.filename))
-    print(f"Original Size: {original_size}")
-    
-    # Calculate scaled dimensions based on percentage
+
     scaled_width = int(original_size[0] * scale_percentage / 100)
     scaled_height = int(original_size[1] * scale_percentage / 100)
-    
     scaled_size = (scaled_width, scaled_height)
-    print(f"Scaled image size: {scaled_size}")
-    
+
     resized_image = image.resize(scaled_size, Image.LANCZOS)
-    resized_image.save(f"C:\\Users\\Master\\Desktop\\Tools\\convertedphotos\\Compressed\\{original_name}_JTOOL_compressed.{filetype}",optimize=True,quality=imagequality)
+
+    # Convert to RGB mode only if the file type is PNG
+    if file_type.lower() == 'jpg' and resized_image.mode == 'RGBA':
+        resized_image = resized_image.convert('RGB')
+    
+    save_path = os.path.join("C:\\Users\\Master\\Desktop\\Tools\\convertedphotos\\Compressed",
+                             f"{original_name}_JTOOL_compressed.{file_type}")
+
+    resized_image.save(save_path, optimize=True, quality=image_quality)
+
+# ...
+
+
 scale_percentage = float(1.0)
-Compress_Quality = 0
-
-
-
+compress_quality = 0
 
 image_path = input("Image path: ")
 foo = Image.open(image_path)
 
-file_extention = input("file extention: ") 
+file_extension = input("File extension: ")
 
-if file_extention.lower() == "jpg":
-    Compress_Quality = input("Image quality: ")
-    Compress_Quality = int(Compress_Quality)
+
+if file_extension.lower() == "jpg":
+    compress_quality = input("Image quality: ")
+
+try:
+    compress_quality = int(compress_quality)
+except ValueError:
+    print("Invalid compression quality. Using default value (0).")
+    compress_quality = 0
 
 scale_percentage = input("Scale image by what percentage?: ")
-scale_percentage = float(scale_percentage)
 
-# Call the Scale_Image function with the image and scale percentage
-Scale_Image(foo, scale_percentage, Compress_Quality, file_extention)
+try:
+    scale_percentage = float(scale_percentage)
+except ValueError:
+    print("Invalid scale percentage. Using default value (100).")
+    scale_percentage = 100.0
+
+
+scale_image(foo, scale_percentage, compress_quality, file_extension,)
