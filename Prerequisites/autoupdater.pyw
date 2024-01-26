@@ -41,7 +41,7 @@ def get_url_for_task(task_name):
         'Discord_Webhook_Sender': 'https://github.com/Lixvinity/Jtools/raw/main/WebhookMain.py',
         'Twitch_idler': 'https://github.com/Lixvinity/Jtools/raw/main/TwitchDropSniper.py',
         'Rofixer': 'https://github.com/Lixvinity/Jtools/raw/main/robloxfix.py',
-        'PasswordGen': 
+        'PasswordGen': 'https://github.com/Lixvinity/Jtools/raw/main/PasswordGenerator.py', 
         # Add more mappings as needed
     }
     return url_mapping.get(task_name, '')
