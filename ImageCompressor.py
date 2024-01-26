@@ -11,6 +11,7 @@ print(r"""
   \____/            \__|  \___/   \___/  |_|   |___/ ( )   |_____|  \_____| |____|    |_|  
                                                      |/                                    
                                                                                            """)
+print ("Version 1.0 - supports PNG, JPG")
 time.sleep(1)
 
 
