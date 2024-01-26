@@ -71,6 +71,7 @@ csv_file_path = "C:\WINJ\Prerequisites\scripts\Config.csv"
 time.sleep(5)
 
 download_file(url=r"https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/RoFixerIcon.ico",destination=f"{prerequisites}/Rofixer.ico")
+download_file(url=r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/Compress.ico",destination=f"{prerequisites}/Compress.ico")
 #print (startup_folder)
 download_file(url=r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/onstart.pyw",destination=f"{startup_folder}/onstart.pyw")
 # Optional Packs
