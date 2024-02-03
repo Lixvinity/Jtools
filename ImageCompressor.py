@@ -13,7 +13,8 @@ print(r"""
   \____/            \__|  \___/   \___/  |_|   |___/ ( )   |_____|  \_____| |____|    |_|  
                                                      |/                                    
                                                                                            """)
-print ("Version 1.1 - supports PNG, JPG, ICO")
+print ("J-tools Image compressor/converter 2024")
+print ("Version 1.2 - supports PNG, JPG/JPEG, ICO")
 time.sleep(1)
 
 
@@ -25,10 +26,9 @@ def open_file_dialog():
     if not file_path:
         print("No file selected. Exiting.")
         exit()
-
     return file_path
 
-# ...
+
 
 def scale_image(image, scale_percentage, image_quality, file_type):
     original_size = image.size
@@ -49,7 +49,6 @@ def scale_image(image, scale_percentage, image_quality, file_type):
 
     resized_image.save(save_path, optimize=True, quality=image_quality)
 
-# ...
 
 
 scale_percentage = float(1.0)
@@ -61,11 +60,11 @@ foo = Image.open(image_path)
 file_extension = input("File extension: ")
 
 
-if file_extension.lower() == "jpg":
+if file_extension.lower() == "jpg" or file_extension.lower() == "jpeg":
     compress_quality = int(input("Image quality: "))
+    scale_percentage = float(input("Scale image by what percentage?: "))
 else:
-    compress_quality = None
-
+    compress_quality = 0
     scale_percentage = float(input("Scale image by what percentage?: "))
 try:
     scale_percentage = float(scale_percentage)
