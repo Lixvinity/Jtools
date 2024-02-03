@@ -1,6 +1,8 @@
 from PIL import Image
 import os
 import time
+import tkinter as tk
+from tkinter import filedialog
 
 print(r"""
        _            _                     _                 _____    _____   ___    _  _   
@@ -11,9 +13,20 @@ print(r"""
   \____/            \__|  \___/   \___/  |_|   |___/ ( )   |_____|  \_____| |____|    |_|  
                                                      |/                                    
                                                                                            """)
-print ("Version 1.0 - supports PNG, JPG")
+print ("Version 1.1 - supports PNG, JPG, ICO")
 time.sleep(1)
 
+
+def open_file_dialog():
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+
+    file_path = filedialog.askopenfilename(title="Select Image", filetypes=[("Image files", "*.jpg;*.png;*.ico")])
+    if not file_path:
+        print("No file selected. Exiting.")
+        exit()
+
+    return file_path
 
 # ...
 
@@ -42,28 +55,22 @@ def scale_image(image, scale_percentage, image_quality, file_type):
 scale_percentage = float(1.0)
 compress_quality = 0
 
-image_path = input("Image path: ")
+image_path = open_file_dialog()
 foo = Image.open(image_path)
 
 file_extension = input("File extension: ")
 
 
 if file_extension.lower() == "jpg":
-    compress_quality = input("Image quality: ")
+    compress_quality = int(input("Image quality: "))
+else:
+    compress_quality = None
 
-try:
-    compress_quality = int(compress_quality)
-except ValueError:
-    print("Invalid compression quality. Using default value (0).")
-    compress_quality = 0
-
-scale_percentage = input("Scale image by what percentage?: ")
-
+    scale_percentage = float(input("Scale image by what percentage?: "))
 try:
     scale_percentage = float(scale_percentage)
 except ValueError:
     print("Invalid scale percentage. Using default value (100).")
     scale_percentage = 100.0
-
 
 scale_image(foo, scale_percentage, compress_quality, file_extension,)
