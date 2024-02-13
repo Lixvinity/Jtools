@@ -4,26 +4,14 @@ import tkinter as tk
 from tkinter import filedialog
 import time
 from webptools import dwebp
+from colorama import Fore, Style
 
 Custom_Path = False
 SAVE_PATH_FOLDER = os.path.expanduser("~\\Downloads")
 if Custom_Path == True:
-    SAVE_PATH_FOLDER = (r"C:\Users\Master\Desktop\Tools\convertedphotos\Compressed")
-
+    SAVE_PATH_FOLDER = r"C:\Users\Master\Desktop\Tools\convertedphotos\Compressed"
 
 DEFAULT_SCALE_PERCENTAGE = 100
-
-class Color:
-    PURPLE = '\033[95m'
-    CYAN = '\033[96m'
-    DARKCYAN = '\033[36m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
 
 def open_file_dialog():
     root = tk.Tk()
@@ -32,7 +20,7 @@ def open_file_dialog():
     file_paths = filedialog.askopenfilenames(title="Select Images", filetypes=[("Image files", "*.jpg;*.png;*.ico;*.jpeg;*.webp")])
     
     if not file_paths:
-        print(Color.RED + "No files selected. Exiting." + Color.END)
+        print(Fore.RED + "No files selected. Exiting." + Style.RESET_ALL)
         exit()
     
     return file_paths
@@ -67,38 +55,38 @@ def scale_and_save_image(image_path, scale_percentage, compress_quality, file_ty
     print(f"Image {image_path} saved to {save_path}")
 
 if __name__ == "__main__":
-    print(f"""{Color.BOLD}{Color.BLUE}
-          _            _                     _                 
-         | |          | |                   | |                
-         | |  ______  | |_    ___     ___   | |    ___         
-     _   | | |______| | __|  / _ \   / _ \  | |   / __| 
-    | |__| |          | |_  | (_) | | (_) | | |   \__ \ 
-     \____/            \__|  \___/   \___/  |_|   |___/
-                                                                
-    {Color.END}""")
-    print(f"{Color.YELLOW}J-tools Image compressor/converter 2024{Color.END}")
-    print(f"{Color.YELLOW}Version 2.1 - supports Bulk transform and PNG, JPG/JPEG, ICO{Color.END}")
-    print (f"{Color.YELLOW}Save folder is {SAVE_PATH_FOLDER}{Color.END}")
+    print(f"{Style.BRIGHT}{Fore.BLUE}"
+      "          _            _                     _                 \n"
+      "         | |          | |                   | |                \n"
+      "         | |  ______  | |_    ___     ___   | |    ___         \n"
+      "     _   | | |______| | __|  / _ \   / _ \  | |   / __|        \n"
+      "    | |__| |          | |_  | (_) | | (_) | | |   \__ \        \n"
+      "     \____/            \__|  \___/   \___/  |_|   |___/        \n"
+      "                                                                "
+      f"{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}J-tools Image compressor/converter 2024{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Version 2.1 - supports Bulk transform and PNG, JPG/JPEG, ICO{Style.RESET_ALL}")
+    print (f"{Fore.YELLOW}Save folder is {SAVE_PATH_FOLDER}{Style.RESET_ALL}")
     time.sleep(1)
 
     image_paths = open_file_dialog()
-    file_extension = input(f"{Color.GREEN}File extension: {Color.END}").lower()
+    file_extension = input(f"{Fore.GREEN}File extension: {Style.RESET_ALL}").lower()
 
     if file_extension not in ['jpg', 'jpeg', 'png', 'ico', 'webp']:
         print("Unsupported file extension. Exiting.")
         exit()
 
     compress_quality = 0
-    scale_percentage = input(f"{Color.CYAN}Scale image by what percentage? (Default: {DEFAULT_SCALE_PERCENTAGE}): {Color.END}") or DEFAULT_SCALE_PERCENTAGE
+    scale_percentage = input(f"{Fore.CYAN}Scale image by what percentage? (Default: {DEFAULT_SCALE_PERCENTAGE}): {Style.RESET_ALL}") or DEFAULT_SCALE_PERCENTAGE
 
     try:
         scale_percentage = float(scale_percentage)
     except ValueError:
-        print(f"{Color.RED}Invalid scale percentage. Using default value (100){Color.END}")
+        print(f"{Fore.RED}Invalid scale percentage. Using default value (100){Style.RESET_ALL}")
         scale_percentage = DEFAULT_SCALE_PERCENTAGE
 
     if file_extension in ["jpg", "jpeg"]:
-        compress_quality = int(input(f"{Color.CYAN}Image quality: {Color.END}"))
+        compress_quality = int(input(f"{Fore.CYAN}Image quality: {Style.RESET_ALL}"))
 
     for path in image_paths:
         if file_extension == ".webp":
