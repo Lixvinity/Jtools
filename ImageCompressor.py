@@ -65,7 +65,7 @@ if __name__ == "__main__":
       "                                                                "
       f"{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}J-tools Image compressor/converter 2024{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Version 2.1 - supports Bulk transform and PNG, JPG/JPEG, ICO{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Version 2.2 - supports Bulk transform and PNG, JPG/JPEG, ICO{Style.RESET_ALL}")
     print (f"{Fore.YELLOW}Save folder is {SAVE_PATH_FOLDER}{Style.RESET_ALL}")
     time.sleep(1)
 
