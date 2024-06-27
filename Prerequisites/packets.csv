@@ -1,4 +1,4 @@
-name,link,directory,enabled,line_number
+name,link,directory,enabled,key
 Image_Compressor,https://raw.githubusercontent.com/Lixvinity/Jtools/main/ImageCompressor.py,C:\WINJ\Scripts\ImageCompressor.py,False,1
 Password_Generator,https://raw.githubusercontent.com/Lixvinity/Jtools/main/PasswordGenerator.py,C:\WINJ\Scripts\PasswordGen.py,False,2
 Name_Generat0r,https://github.com/Lixvinity/Jtools/raw/main/NameGenerator,C:\WINJ\Scripts\NameGenerator.py,False,3
