@@ -2,5 +2,5 @@ name,link,directory,enabled
 Image_Compressor,https://github.com/Lixvinity/Jtools/raw/main/Scripts/ImageCompressor.py,C:\WINJ\Scripts\ImageCompressor.py,False
 Password_Generator,https://github.com/Lixvinity/Jtools/raw/main/Scripts/PasswordGenerator.py,C:\WINJ\Scripts\PasswordGen.py,False
 Name_Generator,https://github.com/Lixvinity/Jtools/raw/main/Scripts/NameGenerator.py,C:\WINJ\Scripts\NameGenerator.py,False
-Roblox_fix,https://github.com/Lixvinity/Jtools/raw/main/robloxfix.py,C:\WINJ\Scripts\robloxfix.py,False
-Video_Compressor,https://github.com/Lixvinity/Jtools/raw/main/videoCompressor.py,C:\WINJ\Scripts\VideoCompressor.py,False
+Roblox_fix,https://github.com/Lixvinity/Jtools/raw/main/Scripts/robloxfix.py,C:\WINJ\Scripts\robloxfix.py,False
+Video_Compressor,https://github.com/Lixvinity/Jtools/raw/main/Scripts/videoCompressor.py,C:\WINJ\Scripts\VideoCompressor.py,False
