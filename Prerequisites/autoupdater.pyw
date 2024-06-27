@@ -46,12 +46,15 @@ def update_tools(csv_path, url):
             if key in current_tools_dict:
                 # Update existing tool with new values, preserving 'enabled' column
                 current_tool = current_tools_dict[key]
-                current_tool.update({
+                updated_tool = {
                     'name': new_tool['name'],
                     'link': new_tool['link'],
                     'directory': new_tool['directory'],
-                })
-                updated_tools.append(current_tool)
+                    'enabled': current_tool['enabled']  # Preserve existing 'enabled' value
+                }
+                updated_tools.append(updated_tool)
+                # Remove the updated tool from current_tools_dict to track which tools are updated
+                del current_tools_dict[key]
             else:
                 # Add new tool with default 'enabled' value
                 updated_tools.append({
@@ -60,6 +63,9 @@ def update_tools(csv_path, url):
                     'directory': new_tool['directory'],
                     'enabled': 'False'  # Assuming default state is disabled
                 })
+
+        # Append any remaining tools from current_tools_dict (these are unchanged)
+        updated_tools.extend(current_tools_dict.values())
 
         # Write the updated current tools list back to the CSV
         with open(csv_path, mode='w', newline='') as file:
