@@ -1,58 +1,85 @@
 import csv
 import os
 import requests
+import tempfile
 
-# Function to download a file from a given URL
-def download_file_with_url(url, destination, override=False):
-    if not override and os.path.exists(destination):
-        print(f"File '{destination}' already exists. Skipping download.")
-        return
+def download_file(url, local_filename):
+    """Downloads a file from a URL and saves it locally."""
+    try:
+        with requests.get(url, stream=True) as response:
+            response.raise_for_status()
+            with open(local_filename, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
+        print(f"Downloaded {local_filename} from {url}")
+    except requests.RequestException as e:
+        print(f"Failed to download file: {e}")
 
-    response = requests.get(url)
-    with open(destination, 'wb') as file:
-        file.write(response.content)
+def update_tools(csv_path, url):
+    """Downloads the latest CSV, updates existing tools and adds new ones based on row content."""
+    try:
+        # Create a temporary file to store the latest downloaded CSV
+        temp_csv_path = tempfile.NamedTemporaryFile(delete=False).name
 
-# CSV file path
-csv_file_path = "C:\\WINJ\\Prerequisites\\scripts\\Config.csv"  # Replace with the path to your CSV file
+        # Download the latest CSV from the URL
+        download_file(url, temp_csv_path)
 
-# Function to process tasks from the CSV file
-def process_tasks(csv_reader):
-    # Skip the header row
-    next(csv_reader, None)
+        # Read the current CSV
+        current_tools = []
+        with open(csv_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            current_tools = list(reader)
 
-    # Iterate through rows and check if the variable is 'True'
-    for row in csv_reader:
-        task_name = row[0]
-        should_download = row[1].strip().lower()  # Stripping leading/trailing spaces and converting to lowercase
+        # Read the latest downloaded CSV
+        new_tools = []
+        with open(temp_csv_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            new_tools = list(reader)
 
-        if should_download == 'true':
-            url_for_task = get_url_for_task(task_name)  # Replace with your logic to get the URL for each task
-            destination_path = os.path.join("C:\WINJ\Scripts", f'{task_name}.py')  # Replace 'download_directory' with the directory where you want to save the downloaded files
+        # Convert current tools to a dictionary indexed by (name, link, directory)
+        current_tools_dict = {(tool['name'], tool['link'], tool['directory']): tool for tool in current_tools}
 
-            # Download the file, and override if it already exists
-            download_file_with_url(url_for_task, destination_path, override=True)
-            print(f"File for task '{task_name}' downloaded successfully.")
+        # Update current tools with new or updated entries
+        updated_tools = []
+        for new_tool in new_tools:
+            key = (new_tool['name'], new_tool['link'], new_tool['directory'])
+            if key in current_tools_dict:
+                # Update existing tool with new values, preserving 'enabled' column
+                current_tool = current_tools_dict[key]
+                current_tool.update({
+                    'name': new_tool['name'],
+                    'link': new_tool['link'],
+                    'directory': new_tool['directory'],
+                })
+                updated_tools.append(current_tool)
+            else:
+                # Add new tool with default 'enabled' value
+                updated_tools.append({
+                    'name': new_tool['name'],
+                    'link': new_tool['link'],
+                    'directory': new_tool['directory'],
+                    'enabled': 'False'  # Assuming default state is disabled
+                })
 
-# Function to get the URL for each task (replace with your logic)
-def get_url_for_task(task_name):
-    # Replace with your logic to get the URL for each task
-    # For example, you can have a dictionary mapping task names to URLs
-    url_mapping = {
-        'Discord_Webhook_Sender': 'https://github.com/Lixvinity/Jtools/raw/main/WebhookMain.py',
-        'Twitch_idler': 'https://github.com/Lixvinity/Jtools/raw/main/TwitchDropSniper.py',
-        'Rofixer': 'https://github.com/Lixvinity/Jtools/raw/main/robloxfix.py',
-        'PasswordGen': 'https://github.com/Lixvinity/Jtools/raw/main/PasswordGenerator.py',
-        'ImageCompressor': 'https://github.com/Lixvinity/Jtools/raw/main/ImageCompressor.py',
-        
-        # Add more mappings as needed
-    }
-    return url_mapping.get(task_name, '')
+        # Write the updated current tools list back to the CSV
+        with open(csv_path, mode='w', newline='') as file:
+            fieldnames = ['name', 'link', 'directory', 'enabled']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(updated_tools)
 
-# Check if the CSV file exists
-if os.path.exists(csv_file_path):
-    # Open the CSV file and read the rows
-    with open(csv_file_path, 'r') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        process_tasks(csv_reader)
-else:
-    print(f"CSV file '{csv_file_path}' not found.")
+        print("Tools updated successfully.")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    finally:
+        # Clean up temporary file
+        if os.path.exists(temp_csv_path):
+            os.remove(temp_csv_path)
+
+# Example usage:
+csv_path = r"C:\WINJ\Prerequisites\scripts\packets.csv"
+url = "https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/packets.csv"
+
+update_tools(csv_path, url)
