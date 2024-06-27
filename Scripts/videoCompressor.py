@@ -22,7 +22,7 @@ def open_file_dialog():
     
     return file_paths
 
-def compress_video(video_path, compression_factor):
+def compress_video(video_path, compression_factor, fps, quality):
     try:
         video = mp.VideoFileClip(video_path)
     except Exception as e:
@@ -38,7 +38,7 @@ def compress_video(video_path, compression_factor):
 
     try:
         video_resized = video.resize(new_size)
-        video_resized.write_videofile(save_path, codec="libx264", preset="slow", bitrate="500k", audio_codec="aac")
+        video_resized.write_videofile(save_path, codec="libx264", preset=quality, bitrate="500k", audio_codec="aac", fps=fps)
         print(f"Video {video_path} saved to {save_path}")
     except Exception as e:
         print(f"Error saving video {video_path}: {e}")
@@ -50,8 +50,27 @@ if __name__ == "__main__":
 
     video_paths = open_file_dialog()
 
+    fps = input("Enter fps: ")
+    fps = int(fps)
     compression_factor = input("Compression factor (e.g., 0.5 for 50% size reduction): ")
+
+    print("enter the speed of your render")
+    print("speed/quality of your render wont affect the compression and wont increase or decrease file size")
+
+    print("4 = fastest speed and lowest quality")
+    print("3 = fast speed and lower quality")
+    print("2 = medium speed and quality")
+    print("1 = slow speed and high quality")
+    print("0 = slowest speed and highest quality")
+
+    qualitykeys = ("veryfast", "faster", "fast", "medium", "slow", "slower")
+
+
+    quality = input("> enter render speed: ")
+    quality = int(quality)
     
+    quality = qualitykeys[quality]
+
     try:
         compression_factor = float(compression_factor)
     except ValueError:
@@ -59,4 +78,4 @@ if __name__ == "__main__":
         compression_factor = 1.0
 
     for path in video_paths:
-        compress_video(path, compression_factor)
+        compress_video(path, compression_factor, fps, quality)
