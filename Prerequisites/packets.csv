@@ -2,4 +2,4 @@ name,link,directory,enabled
 Image_Compressor,https://raw.githubusercontent.com/Lixvinity/Jtools/main/ImageCompressor.py,C:\WINJ\Scripts\ImageCompressor.py,False
 Password_Generator,https://raw.githubusercontent.com/Lixvinity/Jtools/main/PasswordGenerator.py,C:\WINJ\Scripts\PasswordGen.py,False
 Name_Generat0r,https://github.com/Lixvinity/Jtools/raw/main/NameGenerator,C:\WINJ\Scripts\NameGenerator.py,False
-Roblox_fix,https://github.com/Lixvinity/Jtools/raw/main/robloxfix.py,False
+Roblox_fix,https://github.com/Lixvinity/Jtools/raw/main/robloxfix.py,,C:\WINJ\Scripts\robloxfix.py,False
