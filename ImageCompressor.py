@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import filedialog
 import time
 from webptools import dwebp
-from colorama import Fore, Style
 
 Custom_Path = False
 SAVE_PATH_FOLDER = os.path.expanduser("~\\Downloads")
@@ -20,7 +19,7 @@ def open_file_dialog():
     file_paths = filedialog.askopenfilenames(title="Select Images", filetypes=[("Image files", "*.jpg;*.png;*.ico;*.jpeg;*.webp")])
     
     if not file_paths:
-        print(Fore.RED + "No files selected. Exiting." + Style.RESET_ALL)
+        print("No files selected. Exiting.")
         exit()
     
     return file_paths
@@ -55,38 +54,37 @@ def scale_and_save_image(image_path, scale_percentage, compress_quality, file_ty
     print(f"Image {image_path} saved to {save_path}")
 
 if __name__ == "__main__":
-    print(f"{Style.BRIGHT}{Fore.BLUE}"
+    print(
       "          _            _                     _                 \n"
       "         | |          | |                   | |                \n"
       "         | |  ______  | |_    ___     ___   | |    ___         \n"
       "     _   | | |______| | __|  / _ \   / _ \  | |   / __|        \n"
       "    | |__| |          | |_  | (_) | | (_) | | |   \__ \        \n"
       "     \____/            \__|  \___/   \___/  |_|   |___/        \n"
-      "                                                                "
-      f"{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}J-tools Image compressor/converter 2024{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Version 2.2 - supports Bulk transform and PNG, JPG/JPEG, ICO{Style.RESET_ALL}")
-    print (f"{Fore.YELLOW}Save folder is {SAVE_PATH_FOLDER}{Style.RESET_ALL}")
+      "                                                                ")
+    print(f"J-tools Image compressor/converter 202")
+    print(f"Version 2.2 - supports Bulk transform and PNG, JPG/JPEG, IC")
+    print (f"Save folder is {SAVE_PATH_FOLDER}")
     time.sleep(1)
 
     image_paths = open_file_dialog()
-    file_extension = input(f"{Fore.GREEN}File extension: {Style.RESET_ALL}").lower()
+    file_extension = input(f"File extension:").lower()
 
     if file_extension not in ['jpg', 'jpeg', 'png', 'ico', 'webp']:
         print("Unsupported file extension. Exiting.")
         exit()
 
     compress_quality = 0
-    scale_percentage = input(f"{Fore.CYAN}Scale image by what percentage? (Default: {DEFAULT_SCALE_PERCENTAGE}): {Style.RESET_ALL}") or DEFAULT_SCALE_PERCENTAGE
+    scale_percentage = input(f"Scale image by what percentage? (Default: {DEFAULT_SCALE_PERCENTAGE}):") or DEFAULT_SCALE_PERCENTAGE
 
     try:
         scale_percentage = float(scale_percentage)
     except ValueError:
-        print(f"{Fore.RED}Invalid scale percentage. Using default value (100){Style.RESET_ALL}")
+        print(f"Invalid scale percentage. Using default value (100)")
         scale_percentage = DEFAULT_SCALE_PERCENTAGE
 
     if file_extension in ["jpg", "jpeg"]:
-        compress_quality = int(input(f"{Fore.CYAN}Image quality: {Style.RESET_ALL}"))
+        compress_quality = int(input(f"Image quality:"))
 
     for path in image_paths:
         if file_extension == ".webp":
