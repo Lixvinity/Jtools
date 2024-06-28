@@ -1,6 +1,30 @@
-import csv
 import os
+from subprocess import Popen
+import sys
+import time
+import win32com.client
+
+directory_script = r"C:\WINJ\Prerequisites\scripts\CreateDirectories.py"
+libs_script = r"C:\WINJ\Prerequisites\scripts\lib.py"
+select_tools = r"C:\WINJ\Prerequisites\scripts\SelectPackages.py"
+
+
+def run_program(directory):
+    # Function to run the program
+    Popen(directory, shell=True)
+
+print("creating Jtool's directory")
+time.sleep(1)
+run_program(directory_script)
+print("done")
+time.sleep(1)
+print("starting install on libraries")
+time.sleep(3)
+run_program(libs_script)
+
 import requests
+
+startup_folder = os.path.join(os.path.expanduser('~'), 'AppData', 'Roaming', 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
 
 def download_file(url, local_filename):
     """Downloads a file from a URL and saves it locally."""
@@ -14,54 +38,35 @@ def download_file(url, local_filename):
     except requests.RequestException as e:
         print(f"Failed to download file: {e}")
 
-def manage_tools(csv_path):
-    """Reads a CSV file, manages tool installation/removal based on user input, and updates the CSV file."""
-    try:
-        with open(csv_path, mode='r', newline='') as file:
-            reader = csv.DictReader(file)
-            tools = list(reader)
+download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/onstart.pyw", f"{startup_folder}/onstart.pyw")
+run_program (f"{startup_folder}/onstart.pyw")
 
-        for tool in tools:
-            name = tool['name']
-            link = tool['link']
-            directory = tool['directory']
-            enabled = tool['enabled'].lower() == 'true'
-            
-            # Ask the user if they want to install the tool
-            response = input(f"Do you want to install {name}? (yes/no): ").strip().lower()
-            
-            if response == 'yes':
-                try:
-                    response = requests.get(link)
-                    response.raise_for_status()
-                    with open(directory, 'wb') as file:
-                        file.write(response.content)
-                    print(f"{name} has been installed at {directory}")
-                    tool['enabled'] = 'True'
-                except requests.RequestException as e:
-                    print(f"Failed to download {name}: {e}")
-                    tool['enabled'] = 'False'
-            else:
-                tool['enabled'] = 'False'
-                if os.path.exists(directory):
-                    os.remove(directory)
-                    print(f"{name} has been removed from {directory}")
+icon = r"C:\WINJ\Prerequisites\Jtoolspro.ico"
+jtoolshub = r"C:\WINJ\Prerequisites\scripts\JtoolsHub.py"
 
-        with open(csv_path, mode='w', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=['name', 'link', 'directory', 'enabled'])
-            writer.writeheader()
-            writer.writerows(tools)
-        #print(f"Updated CSV file at {csv_path}")
-        
-    except Exception as e:
-        print(f"An error occurred: {e}")
+download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/JtoolsHub.py", jtoolshub)
+download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/SelectPackages.py", f"C:\WINJ\Prerequisites\scripts\SelectPackages.py")
+download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/lib.py", f"C:\WINJ\Prerequisites\scripts\lib.py")
+download_file(r"https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/Jtoolspro.ico", icon)
+time.sleep(1)
+run_program(select_tools)
 
-# Define URLs and paths
-csv_url = "https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/packets.csv"
-csv_local_path = r'C:\WINJ\Prerequisites\scripts\packets.csv'
+def create_shortcut(name, target, icon=None):
+    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+    shortcut_path = os.path.join(desktop, f"{name}.lnk")
+    
+    shell = win32com.client.Dispatch("WScript.Shell")
+    shortcut = shell.CreateShortCut(shortcut_path)
+    shortcut.Targetpath = target
+    
+    if icon:
+        shortcut.IconLocation = icon
+    
+    shortcut.save()
+    print(f"Shortcut '{name}' created on the desktop.")
 
-# Download the CSV file
-download_file(csv_url, csv_local_path)
+shortcut_name = "Jtools"
+target_path = jtoolshub
+icon_path = icon # Optional
 
-# Manage tools based on the downloaded CSV
-manage_tools(csv_local_path)
+create_shortcut(shortcut_name, target_path, icon_path)
