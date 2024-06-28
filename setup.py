@@ -47,6 +47,7 @@ jtoolshub = r"C:\WINJ\Prerequisites\scripts\JtoolsHub.py"
 download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/JtoolsHub.py", jtoolshub)
 download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/SelectPackages.py", f"C:\WINJ\Prerequisites\scripts\SelectPackages.py")
 download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/lib.py", f"C:\WINJ\Prerequisites\scripts\lib.py")
+download_file(r"https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/setup.py", f"C:\WINJ\Prerequisites\scripts\setup.py")
 download_file(r"https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/Jtoolspro.ico", icon)
 time.sleep(1)
 run_program(select_tools)
