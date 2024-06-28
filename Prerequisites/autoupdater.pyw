@@ -88,4 +88,6 @@ def update_tools(csv_path, url):
 csv_path = r"C:\WINJ\Prerequisites\scripts\packets.csv"
 url = "https://raw.githubusercontent.com/Lixvinity/Jtools/main/Prerequisites/packets.csv"
 
+download_file("https://github.com/Lixvinity/Jtools/raw/main/Prerequisites/JtoolsHub.py", r"C:\WINJ\Prerequisites\scripts\JtoolsHub.py")
+
 update_tools(csv_path, url)
