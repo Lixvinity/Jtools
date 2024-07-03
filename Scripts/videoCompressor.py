@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 import moviepy.editor as mp
+#1
 
 # User-defined settings
 Custom_Path = False
@@ -50,32 +51,43 @@ if __name__ == "__main__":
 
     video_paths = open_file_dialog()
 
-    fps = input("Enter fps: ")
-    fps = int(fps)
-    compression_factor = input("Compression factor (e.g., 0.5 for 50% size reduction): ")
+    while True:
+        try:
+            fps = int(input("Enter fps: "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a numeric value for fps.")
 
-    print("enter the speed of your render")
-    print("speed/quality of your render wont affect the compression and wont increase or decrease file size")
+    while True:
+        try:
+            compression_factor = float(input("Compression factor (e.g., 0.5 for 50% size reduction): "))
+            if compression_factor > 0:
+                break
+            else:
+                print("Compression factor must be greater than 0.")
+        except ValueError:
+            print("Invalid input. Please enter a numeric value for the compression factor.")
 
+    print("Enter the speed of your render")
+    print("Speed/quality of your render won't affect the compression and won't increase or decrease file size")
     print("4 = fastest speed and lowest quality")
     print("3 = fast speed and lower quality")
     print("2 = medium speed and quality")
     print("1 = slow speed and high quality")
     print("0 = slowest speed and highest quality")
 
-    qualitykeys = ("veryfast", "faster", "fast", "medium", "slow", "slower")
+    quality_keys = ("veryfast", "faster", "fast", "medium", "slow", "slower")
 
-
-    quality = input("> enter render speed: ")
-    quality = int(quality)
-    
-    quality = qualitykeys[quality]
-
-    try:
-        compression_factor = float(compression_factor)
-    except ValueError:
-        print("Invalid compression factor. Using default value (1.0)")
-        compression_factor = 1.0
+    while True:
+        try:
+            quality = int(input("> Enter render speed (0-4): "))
+            if 0 <= quality <= 4:
+                quality = quality_keys[quality]
+                break
+            else:
+                print("Please enter a value between 0 and 4.")
+        except ValueError:
+            print("Invalid input. Please enter a numeric value between 0 and 4.")
 
     for path in video_paths:
         compress_video(path, compression_factor, fps, quality)
