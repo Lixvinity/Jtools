@@ -59,7 +59,7 @@ class App:
     def load_image(self, icon_name, size):
         image_path = os.path.join(image_folders, icon_name)
         image = Image.open(image_path)
-        image = image.resize(size, Image.ANTIALIAS)
+        image = image.resize(size, Image.LANCZOS)
         return ImageTk.PhotoImage(image)
 
     def run_program(self, directory):
@@ -195,9 +195,6 @@ class App:
         self.News_window.resizable(False, False)
 
         notice = ctk.CTkLabel(self.News_window, text="coming soon").pack()
-
-
-
 
 
 if __name__ == "__main__":
