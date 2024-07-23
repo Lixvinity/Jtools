@@ -1,6 +1,0 @@
-Version 2.0 is being gradually rolled out across the Jtool suite. This update will introduce a user interface that enhances interaction between you and your tools.
-
-While no new tools will be added in version 2.0, we are focusing on refining our existing library.
-
-Fun Fact:
-You can add your own custom scripts to Jtools alongside your regular tools. However, we recommend doing this only if you are confident in your skills, as incorrect scripts could cause significant issues.
