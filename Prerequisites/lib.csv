@@ -7,3 +7,4 @@ Pillow
 tkinter
 pywin32
 customtkinter
+cv2
