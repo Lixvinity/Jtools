@@ -11,7 +11,8 @@ import threading
 window = tk.CTk()
 window.title("Jtool's Video Compressor")
 window.geometry("800x600")
-
+window.resizable(False, False)
+window.iconbitmap(r"C:\WINJ\Prerequisites\Icons\VideoJtools_compressed.ico")
 # Global variables
 video_paths = []
 video_number = 0
