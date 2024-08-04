@@ -14,7 +14,7 @@ window = ttk.Window(themename="darkly")
 window.title("Password generator")
 window.geometry("275x475")
 window.resizable(False, False)
-
+window.iconbitmap("C:\WINJ\Prerequisites\Icons\passwordJtools_compressed.ico")
 
 # Global variables
 mouse_positions = []
