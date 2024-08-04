@@ -5,7 +5,7 @@ import csv
 from subprocess import Popen
 import webbrowser
 
-image_folders = r"C:\WINJ\Prerequisites"
+image_folders = r"C:\WINJ\Prerequisites\Icons"
 settings_Icon = "SettingsIcon.png"
 news_icon = "NewsIcon.png"
 feed_icon = "Feed.png"
@@ -20,6 +20,7 @@ class App:
         root.title("Jtool's hub")
         root.geometry("600x400")
         root.resizable(False, False)
+        root.iconbitmap(r"C:\WINJ\Prerequisites\Jtoolspro.ico")
 
         # Load the images using PIL and convert them to Tkinter-compatible images
         self.settings_image = self.load_image(settings_Icon, (42, 42))
