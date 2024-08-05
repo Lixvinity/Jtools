@@ -165,6 +165,8 @@ LBG.grid(row=2, column=0, sticky="sew", padx=10, pady=10)
 
 password_options.rowconfigure(0, weight=0)
 password_options.rowconfigure(1, weight=1)
+password_options.rowconfigure(2, weight=1)
+password_options.columnconfigure(0, weight=1)
 
 # Checkbuttons and labels
 lower_case_label = ttk.Label(options, text="a-z")
@@ -226,7 +228,9 @@ LBG.columnconfigure(2, weight=1)
 
 # Add a text widget to display the generated password
 password_display = tk.Text(master=LBG, height=5, width=30)
-password_display.grid(row=4, column=0, columnspan=3, pady=10)
+password_display.grid(row=4, column=0, columnspan=3, pady=10, sticky="nsew")
+
+LBG.rowconfigure(4, weight=1)
 
 # Start collecting mouse positions in a separate thread
 thread = threading.Thread(target=collect_mouse_positions)
